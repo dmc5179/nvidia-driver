@@ -1,16 +1,14 @@
 FROM registry.access.redhat.com/ubi8/ubi:8.1
 
-ARG BASE_URL=https://us.download.nvidia.com/tesla
-#ARG DRIVER_VERSION=440.33.01
+ARG DRIVER_VERSION=440.64.00
 ENV DRIVER_VERSION=440.64.00
+ARG BASE_URL=https://us.download.nvidia.com/tesla
 ENV BASE_URL=https://us.download.nvidia.com/tesla
-ENV DAN_KEY=4.18.0-147.3.1.el8_1.x86_64
 ARG PUBLIC_KEY=empty
 ARG PRIVATE_KEY
 #ARG KERNEL_VERSION=4.18.0-147.5.1.el8_1.x86_64
 ARG KERNEL_VERSION=4.18.0-147.3.1.el8_1.x86_64
 
-#COPY nvidia-driver /usr/local/bin
 COPY nvidia-driver-disconnected /usr/local/bin/nvidia-driver-disconnected
 
 RUN dnf install --setopt tsflags=nodocs -y ca-certificates curl gcc glibc.i686 make cpio kmod \
@@ -37,9 +35,8 @@ RUN cd /tmp \
     && mv LICENSE mkprecompiled kernel /usr/src/nvidia-$DRIVER_VERSION \
     && sed '9,${/^\(kernel\|LICENSE\)/!d}' .manifest > /usr/src/nvidia-$DRIVER_VERSION/.manifest \
     && rm -rf /tmp/* \
+    && dnf download -y kernel-core-${KERNEL_VERSION} --downloaddir=/tmp/ \
     && rm -rf /var/cache/yum
-
-COPY kernel-core-4.18.0-147.3.1.el8_1.x86_64.rpm /tmp/
 
 WORKDIR /usr/src/nvidia-$DRIVER_VERSION
 
