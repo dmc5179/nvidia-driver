@@ -1,4 +1,4 @@
-#! /bin/bash -x
+#! /bin/bash -xe
 # Copyright (c) 2018, NVIDIA CORPORATION. All rights reserved.
 
 set -eu
@@ -7,6 +7,7 @@ RUN_DIR=/run/nvidia
 PID_FILE=${RUN_DIR}/${0##*/}.pid
 DRIVER_VERSION=${DRIVER_VERSION:?"Missing driver version"}
 KERNEL_UPDATE_HOOK=/run/kernel/postinst.d/update-nvidia-driver
+KERNEL_VERSION="4.18.0-147.3.1.el8_1.x86_64"
 
 #_update_package_cache() {
 #    if [ "${PACKAGE_TAG:-}" != "builtin" ]; then
@@ -33,7 +34,7 @@ _resolve_kernel_version() {
 #        return 1
 #    fi
 #    KERNEL_VERSION="${version}"
-    KERNEL_VERSION="4.18.0-147.5.1.el8_1.x86_64"
+    KERNEL_VERSION="4.18.0-147.3.1.el8_1.x86_64"
     echo "Proceeding with Linux kernel version ${KERNEL_VERSION}"
     return 0
 }
@@ -56,7 +57,7 @@ _install_prerequisites() (
 
     echo "Installing Linux kernel module files..."
     #dnf install -y -q kernel-core-${KERNEL_VERSION} --setopt=install_weak_deps=False --best --downloadonly --downloaddir=$(pwd)
-    #cat ./kernel-core-*.rpm | rpm2cpio | cpio -idm --quiet
+    cat /tmp/kernel-core-*.rpm | rpm2cpio | cpio -idm --quiet
     #rm ./*.rpm
 
     mv lib/modules/${KERNEL_VERSION}/modules.* /lib/modules/${KERNEL_VERSION}

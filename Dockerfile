@@ -4,20 +4,27 @@ ARG BASE_URL=https://us.download.nvidia.com/tesla
 #ARG DRIVER_VERSION=440.33.01
 ENV DRIVER_VERSION=440.64.00
 ENV BASE_URL=https://us.download.nvidia.com/tesla
+ENV DAN_KEY=4.18.0-147.3.1.el8_1.x86_64
 ARG PUBLIC_KEY=empty
 ARG PRIVATE_KEY
-ARG KERNEL_VERSION=4.18.0-147.5.1.el8_1.x86_64
+#ARG KERNEL_VERSION=4.18.0-147.5.1.el8_1.x86_64
+ARG KERNEL_VERSION=4.18.0-147.3.1.el8_1.x86_64
 
+#COPY nvidia-driver /usr/local/bin
+COPY nvidia-driver-disconnected /usr/local/bin/nvidia-driver-disconnected
 
-RUN yum install --setopt tsflags=nodocs -y ca-certificates curl gcc glibc.i686 make cpio kmod \
+RUN dnf install --setopt tsflags=nodocs -y ca-certificates curl gcc glibc.i686 make cpio kmod \
     elfutils-libelf.x86_64 elfutils-libelf-devel.x86_64 \
+    kernel-headers-${KERNEL_VERSION} kernel-devel-${KERNEL_VERSION} \
     && rm -rf /var/cache/yum/*
 
 RUN curl -fsSL -o /usr/local/bin/donkey https://github.com/3XX0/donkey/releases/download/v1.1.0/donkey \
     && curl -fsSL -o /usr/local/bin/extract-vmlinux https://raw.githubusercontent.com/torvalds/linux/master/scripts/extract-vmlinux \
     && chmod +x /usr/local/bin/donkey /usr/local/bin/extract-vmlinux
 
-RUN ln -s /sbin/ldconfig /sbin/ldconfig.real
+RUN ln -s /sbin/ldconfig /sbin/ldconfig.real \
+ && chmod +x /usr/local/bin/nvidia-driver-disconnected \
+ && ln -sf /usr/local/bin/nvidia-driver-disconnected /usr/local/bin/nvidia-driver
 
 RUN cd /tmp \
     && curl -fSsl -O $BASE_URL/$DRIVER_VERSION/NVIDIA-Linux-x86_64-$DRIVER_VERSION.run \
@@ -32,8 +39,7 @@ RUN cd /tmp \
     && rm -rf /tmp/* \
     && rm -rf /var/cache/yum
 
-COPY nvidia-driver /usr/local/bin
-COPY nvidia-driver-disconnected /usr/local/bin
+COPY kernel-core-4.18.0-147.3.1.el8_1.x86_64.rpm /tmp/
 
 WORKDIR /usr/src/nvidia-$DRIVER_VERSION
 
@@ -42,5 +48,6 @@ COPY ${PUBLIC_KEY} kernel/pubkey.x509
 RUN mkdir -p /run/nvidia \
  && touch /run/nvidia/nvidia-driver.pid
 
-ENTRYPOINT ["nvidia-driver-disconnected" "init"]
+# This will really run the disconnected version
+ENTRYPOINT ["nvidia-driver, "init"]
 
