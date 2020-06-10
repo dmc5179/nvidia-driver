@@ -14,7 +14,7 @@ ARG KERNEL_VERSION=4.18.0-147.8.1.el8_1.x86_64
 COPY nvidia-driver-disconnected /usr/local/bin/nvidia-driver-disconnected
 
 RUN dnf install --setopt tsflags=nodocs -y ca-certificates curl gcc glibc.i686 make cpio kmod \
-    elfutils-libelf elfutils-libelf-devel
+    elfutils-libelf elfutils-libelf-devel \
     "kernel-headers-${KERNEL_VERSION}" "kernel-devel-${KERNEL_VERSION}" \
     && rm -rf /var/cache/yum/*
 
