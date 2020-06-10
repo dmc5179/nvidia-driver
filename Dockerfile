@@ -7,13 +7,15 @@ ENV BASE_URL=https://us.download.nvidia.com/tesla
 ARG PUBLIC_KEY=empty
 ARG PRIVATE_KEY
 #ARG KERNEL_VERSION=4.18.0-147.5.1.el8_1.x86_64
-ARG KERNEL_VERSION=4.18.0-147.3.1.el8_1.x86_64
+#ARG KERNEL_VERSION=4.18.0-147.3.1.el8_1.x86_64
+ARG KERNEL_VERSION=4.18.0-147.8.1.el8_1.x86_64
+
 
 COPY nvidia-driver-disconnected /usr/local/bin/nvidia-driver-disconnected
 
 RUN dnf install --setopt tsflags=nodocs -y ca-certificates curl gcc glibc.i686 make cpio kmod \
-    elfutils-libelf.x86_64 elfutils-libelf-devel.x86_64 \
-    kernel-headers-${KERNEL_VERSION} kernel-devel-${KERNEL_VERSION} \
+    elfutils-libelf elfutils-libelf-devel
+    "kernel-headers-${KERNEL_VERSION}" "kernel-devel-${KERNEL_VERSION}" \
     && rm -rf /var/cache/yum/*
 
 RUN curl -fsSL -o /usr/local/bin/donkey https://github.com/3XX0/donkey/releases/download/v1.1.0/donkey \
