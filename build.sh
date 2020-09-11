@@ -1,6 +1,7 @@
 #!/bin/bash -xe
 
 # See the README file for a description of these variables
+BASE_URL='https://us.download.nvidia.com/tesla'
 KERNEL_VERSION='4.18.0-147.3.1.el8_1.x86_64'
 DRIVER_VERSION='440.64.00'
 RHCOS_VERSION='4.3.0'
@@ -13,6 +14,7 @@ sudo podman build \
      --build-arg=BASE_URL=https://us.download.nvidia.com/tesla \
      --build-arg=PUBLIC_KEY=empty \
      --build-arg=KERNEL_VERSION=${KERNEL_VERSION} \
+     --build-arg=BASE_URL=${BASE_URL} \
      --file Dockerfile .
 
 exit 0
