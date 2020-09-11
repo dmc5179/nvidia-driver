@@ -7,6 +7,16 @@ Containerized version of nvidia drivers on RedHat CoreOS for air-gapped environm
 
 Note: The container cannot be built in an air-gapped / disconnected environment. It requires yum/dnf and the ability to curl the nvidia tools
 
+| Variable Name  | Default Value                 | Comments                           |
+| :---           | :---                          | :---                               |
+| KERNEL_VERSION | '4.18.0-147.3.1.el8_1.x86_64' | Kernel version of the RHCOS system |
+| DRIVER_VERSION | '440.64.00'                   | Nvidia Driver Version              |
+| RHCOS_VERSION  | '4.3.0'                       | Red Hat CoreOS Version             |
+| REGISTRY       | 'quay.io'                     | Docker Registry                    |
+| REPO           | 'danclark'                    | Docker Registry Repo               |
+
+
+- RHCOS version to kernel version mapping
 
 | RHCOS Version  | Kernel Version               |
 | :---           | :---                         |
