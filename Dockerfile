@@ -1,14 +1,12 @@
 FROM registry.access.redhat.com/ubi8/ubi:8.1
 
 ARG DRIVER_VERSION=440.64.00
-ENV DRIVER_VERSION=440.64.00
+#ENV DRIVER_VERSION=440.64.00
 ARG BASE_URL=https://us.download.nvidia.com/tesla
-ENV BASE_URL=https://us.download.nvidia.com/tesla
+#ENV BASE_URL=https://us.download.nvidia.com/tesla
 ARG PUBLIC_KEY=empty
 ARG PRIVATE_KEY
-#ARG KERNEL_VERSION=4.18.0-147.5.1.el8_1.x86_64
-#ARG KERNEL_VERSION=4.18.0-147.3.1.el8_1.x86_64
-ARG KERNEL_VERSION=4.18.0-147.8.1.el8_1.x86_64
+ARG KERNEL_VERSION=4.18.0-147.3.1.el8_1.x86_64
 
 
 COPY nvidia-driver-disconnected /usr/local/bin/nvidia-driver-disconnected

@@ -1,14 +1,18 @@
 #!/bin/bash -xe
 
-# May need to disable SELinux?
+# See the README file for a description of these variables
+KERNEL_VERSION='4.18.0-147.3.1.el8_1.x86_64'
+DRIVER_VERSION='440.64.00'
+RHCOS_VERSION='4.3.0'
+REGISTRY='quay.io'
+REPO='danclark'
 
-#KERNEL_VERSION=4.18.0-147.5.1.el8_1.x86_64
-KERNEL_VERSION=4.18.0-147.8.1.el8_1.x86_64
-DRIVER_VERSION=440.64.00
-RHCOS_VERSION=4.4
-REGISTRY="quay.io"
-REPO="danclark"
-
-sudo podman build -t ${REGISTRY}/${REPO}/nvidia-driver:${DRIVER_VERSION}-1.0.0-custom-rhcos${RHCOS_VERSION} -f Dockerfile .
+sudo podman build \
+     --tag ${REGISTRY}/${REPO}/nvidia-driver:${DRIVER_VERSION}-1.0.0-custom-rhcos${RHCOS_VERSION} \
+     --build-arg=DRIVER_VERSION=${DRIVER_VERSION} \
+     --build-arg=BASE_URL=https://us.download.nvidia.com/tesla \
+     --build-arg=PUBLIC_KEY=empty \
+     --build-arg=KERNEL_VERSION=${KERNEL_VERSION} \
+     --file Dockerfile .
 
 exit 0
