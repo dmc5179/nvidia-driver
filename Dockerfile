@@ -33,7 +33,7 @@ RUN ln -s /sbin/ldconfig /sbin/ldconfig.real \
  && ln -sf /usr/local/bin/nvidia-driver-disconnected /usr/local/bin/nvidia-driver
 
 RUN cd /tmp \
-    && curl -fSsl -O $BASE_URL/$DRIVER_VERSION/NVIDIA-Linux-x86_64-$DRIVER_VERSION.run \
+    && curl -fSslL -O $BASE_URL/$DRIVER_VERSION/NVIDIA-Linux-x86_64-$DRIVER_VERSION.run \
     && sh NVIDIA-Linux-x86_64-$DRIVER_VERSION.run -x \
     && cd NVIDIA-Linux-x86_64-$DRIVER_VERSION \
     && ./nvidia-installer --silent --no-kernel-module --install-compat32-libs --no-nouveau-check --no-nvidia-modprobe \
