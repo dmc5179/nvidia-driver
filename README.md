@@ -31,3 +31,4 @@ Note: The container cannot be built in an air-gapped / disconnected environment.
 | 4.5.2-x86_64   | 4.18.0-193.13.2.el8_2.x86_64     |
 | 4.5.6-x86_64   | 4.18.0-193.14.3.el8_2.x86_64     |
 | 4.6.1-x86_64   | 4.18.0-193.24.1.el8_2.dt1.x86_64 |
+| 4.6.8-x86_64   | 4.18.0-193.29.1.el8_2.x86_64     |

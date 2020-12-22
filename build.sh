@@ -4,10 +4,11 @@
 BASE_URL='https://us.download.nvidia.com/tesla'
 #KERNEL_VERSION='4.18.0-193.13.2.el8_2.x86_64'
 DRIVER_VERSION='450.51.06'
-RHCOS_VERSION='4.5.6'
+RHCOS_VERSION='4.6.8'
 REGISTRY='quay.io'
 REPO='danclark'
 
+# Yes, I use the table in the README. What, am I going to put a table in 2 places?
 KERNEL_VERSION=$(grep ${RHCOS_VERSION} README.md | awk -F\| '{print $3}' | tr -d ' ')
 
 sudo podman build --no-cache \
