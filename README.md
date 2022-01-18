@@ -20,8 +20,8 @@ Note: The container cannot be built in an air-gapped / disconnected environment.
 
 - RHCOS version to kernel version mapping
 
-| RHCOS Version  | Kernel Version                   |
-| :---           | :---                             |
+| RHCOS Version  | Kernel Version            |
+| :---           | :---                      |
 | 4.3.0          | 4.18.0-147.3.1.el8_1      |
 | 4.3.8          | 4.18.0-147.5.1.el8_1      |
 | 4.3.33         | 4.18.0-193.14.3.el8_2     |
@@ -35,3 +35,7 @@ Note: The container cannot be built in an air-gapped / disconnected environment.
 | 4.7.0          | 4.18.0-240.10.1.el8_3     |
 | 4.7.7          | 4.18.0-240.15.1.el8_3     |
 | 4.7.13         | 4.18.0-240.22.1.el8_3     |
+| 4.7.33         | 4.18.0-305.19.1.el8_4     |
+| 4.8.2          | 4.18.0-305.10.2.el8_4     |
+| 4.8.14         | 4.18.0-305.19.1.el8_4     |
+| 4.9.0          | 4.18.0-305.19.1.el8_4     |
