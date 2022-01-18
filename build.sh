@@ -13,7 +13,6 @@ ARCH="${ARCH:-x86_64}"
 KERNEL_VERSION=$(grep ${RHCOS_VERSION} README.md | awk -F\| '{print $3}' | tr -d ' ')
 
 echo "Kernel Version: $KERNEL_VERSION"
-exit 0
 
 sudo podman build --no-cache \
      --tag ${REGISTRY}/${REPO}/nvidia-driver:${DRIVER_VERSION}-1.0.0-custom-rhcos-${KERNEL_VERSION}-${RHCOS_VERSION} \
