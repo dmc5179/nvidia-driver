@@ -11,8 +11,10 @@ ARCH="${ARCH:-x86_64}"
 
 # Yes, I use the table in the README. What, am I going to put a table in 2 places?
 KERNEL_VERSION=$(grep ${RHCOS_VERSION} README.md | awk -F\| '{print $3}' | tr -d ' ')
+RHEL_VERSION=$(echo $KERNEL_VERSION | awk -F\. '{print $NF}' | sed 's|el||' | sed 's|_|.|')
 
 echo "Kernel Version: $KERNEL_VERSION"
+echo "RHEL Version: $RHEL_VERSION"
 
 sudo podman build --no-cache \
      --tag ${REGISTRY}/${REPO}/nvidia-driver:${DRIVER_VERSION}-1.0.0-custom-rhcos-${KERNEL_VERSION}-${RHCOS_VERSION} \
@@ -22,6 +24,7 @@ sudo podman build --no-cache \
      --build-arg=KERNEL_VERSION=${KERNEL_VERSION} \
      --build-arg=BASE_URL=${BASE_URL} \
      --build-arg=ARCH=${ARCH} \
+     --build-arg=RHEL_VERSION=${RHEL_VERSION} \
      --file Dockerfile .
 
 exit 0
